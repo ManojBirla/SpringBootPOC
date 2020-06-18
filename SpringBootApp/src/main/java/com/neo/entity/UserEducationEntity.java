@@ -17,48 +17,33 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.Data;
 
-
-/**
- * THIS IS USERENTITY Class
- * @author MANOJ BIRLA DATE 16-JUNE-2020
- */
 @Data
 @Entity
-@Table(name="user_details")
-public class UserEntity {
+@Table(name="User_Education")
+public class UserEducationEntity {
 
-	@Column(name = "userid")
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_id_generator")
-	@SequenceGenerator(name="user_id_generator",
+	@Column(name="ureduid")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "userEdu_id_generator")
+	@SequenceGenerator(name="UserEdu_id_generator",
 	                   initialValue = 1,allocationSize = 1,
-	                   sequenceName = "user_id_seq")
-	private Integer userid;
+	                   sequenceName = "userEdu_id_seq")
+	private Integer userEduId;
 	
-	@Column(name ="fname")
-	private String firstName;
+	@Column(name="userScName")
+	private String userScName;
 	
-	@Column(name ="lname")
-	private String lastName;
+	@Column(name="userScCityName")
+	private String userScCityName;
 	
-	@Column(name="email")
-	private String email;
+	@Column(name="userClgName")
+	private String userClgName;
 	
-	@Column(name="mobileNo")
-	private long mobileNo;
+	@Column(name="userBranchName")
+	private String userBranchName;
 	
-	@Column(name="addrs")
-	private String addrs;
-	
-	
-	@Column(name ="pincode")
-	private Integer pincode;
-	
-	@Column(name="dob")
-	private Date dob;
-	
-	@Column(name="doj")
-	private Date doj;
+	@Column(name="UserClgCityNam")
+	private String UserClgCityName;
 	
 	@Column(name="createDate",updatable = false)
 	@CreationTimestamp
@@ -67,11 +52,9 @@ public class UserEntity {
 	@Column(name="updateDate")
 	@UpdateTimestamp
 	private Date updateDate;
-
-	@Column(name = "is_active")
-	private boolean isActive = true;
 	
 	@OneToOne
 	@JoinColumn(name="urMaster_id",nullable = false)
 	private UserMasterEntity userMasterEntity;
+	
 }
