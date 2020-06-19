@@ -2,17 +2,21 @@ package com.neo.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.neo.constants.AppConstants;
 import com.neo.controller.UserRegController;
+import com.neo.dao.UserMasterRepository;
 import com.neo.dao.UserRepository;
 import com.neo.entity.ResponseEntityMessage;
 import com.neo.entity.UserEntity;
+import com.neo.entity.UserMasterEntity;
 
 /**
  * THIS IS IMPLEMENTATION FOR SERVICE LAYER
@@ -23,8 +27,61 @@ public class UserServiceImpl implements UserService {
 
 	private static final Logger logger = LoggerFactory.getLogger(UserRegController.class);
 
+	//UserDtls Repository instance
 	@Autowired
-	public UserRepository repo;
+	private UserRepository repo;
+	
+	//userMaster Repository instance
+	@Autowired
+	private UserMasterRepository userMasterRepo;
+	
+	//UserMasterEntity instance
+	private UserMasterEntity urMasterEntity;
+	
+	/**
+	 * This methode is used to getAllUsers
+	 * 
+	 * @param Entity class Object
+	 * @return message
+	 */
+	public List<UserEntity> fetchAllUsers(){
+		logger.debug("saveUser Methode Execution Started");
+		List<UserEntity> usersList=(List<UserEntity>) repo.findAll();
+		logger.debug("saveUser Methode Execution ended"+usersList);
+		return usersList;
+	}
+	
+	/**
+	 * This methode is used to register User Master
+	 * 
+	 * @param Entity class Object
+	 * @return message
+	 */
+	 public ResponseEntityMessage saveUserMaster(UserMasterEntity entity) {
+		logger.debug("saveUser Methode Execution Started"+entity);
+		urMasterEntity = new UserMasterEntity();
+		ResponseEntityMessage response=new ResponseEntityMessage();
+		if (entity != null) {
+			
+			urMasterEntity = userMasterRepo.save(entity);
+			Integer userId = urMasterEntity.getUserMasterId();
+			if (userId != null) {
+				response.setMessage(AppConstants.SUCCESSINSERTMESSAGE);
+				response.setStatusCode(200);
+				response.setUserId(userId);
+				
+				return response;
+			}
+			response.setMessage(AppConstants.FAILINSERTMESSAGE);
+			response.setStatusCode(400);
+			logger.debug("saveUser Methode Execution ended");
+			return response;
+		}
+		response.setMessage(AppConstants.FAILINSERTMESSAGE);
+		response.setStatusCode(400);
+		return response;
+	}
+	
 
 	/**
 	 * This methode is used to register User details
@@ -37,22 +94,22 @@ public class UserServiceImpl implements UserService {
 		UserEntity urEntity = new UserEntity();
 		ResponseEntityMessage response=new ResponseEntityMessage();
 		if (entity != null) {
-			urEntity = repo.save(entity);
-			System.out.println(urEntity);
+			entity.setUserMasterEntity(urMasterEntity);
+		    urEntity = repo.save(entity);
 			Integer userId = urEntity.getUserid();
 			if (userId != null) {
-				response.setMessage(AppConstants.successInsertMessage);
+				response.setMessage(AppConstants.SUCCESSINSERTMESSAGE);
 				response.setStatusCode(200);
 				response.setUserId(userId);
 				
 				return response;
 			}
-			response.setMessage(AppConstants.failInsertMessage);
+			response.setMessage(AppConstants.FAILINSERTMESSAGE);
 			response.setStatusCode(400);
 			logger.debug("saveUser Methode Execution ended");
 			return response;
 		}
-		response.setMessage(AppConstants.failInsertMessage);
+		response.setMessage(AppConstants.FAILINSERTMESSAGE);
 		response.setStatusCode(400);
 		return response;
 	}
@@ -67,20 +124,25 @@ public class UserServiceImpl implements UserService {
 			throws Exception {
 		logger.debug("Update Methode Execution Started");
 		UserEntity updateEntity = new UserEntity();
+		Optional<UserEntity> updateEntity2 =null;
+		updateEntity2=repo.findById(userId);
 		ResponseEntityMessage response=new ResponseEntityMessage();
-		
+		updateEntity=updateEntity2.get();
+		System.out.println(" jj ----"+updateEntity);
+		urMasterEntity=updateEntity.getUserMasterEntity();
 		if(userId!=null) {
 		entity.setUserid(userId);
+		entity.setUserMasterEntity(urMasterEntity);//entity set
 		logger.info("Before Update " + entity);
 		updateEntity = repo.save(entity);
 		logger.info("After Update " + updateEntity);
 		logger.debug("Update Methode Execution Completed");
-		response.setMessage(AppConstants.successUpdateMessage);
+		response.setMessage(AppConstants.SUCCESSUPDATEMESSAGE);
 		response.setUserId(updateEntity.getUserid());
 		response.setStatusCode(200);
 		return response;
 		}
-		response.setMessage(AppConstants.failUpdateMessage);
+		response.setMessage(AppConstants.FAILUPDATEMESSAGE);
 		response.setStatusCode(304);
 		return response;
 	}
@@ -129,16 +191,17 @@ public class UserServiceImpl implements UserService {
 		logger.debug("Delete Methode Execution Started");
 		ResponseEntityMessage response=new ResponseEntityMessage();
 		if (userId != null) {
-			response.setMessage(AppConstants.successDeleteMessage);
+			response.setMessage(AppConstants.SUCCESSDELETEMESSAGE);
 			response.setStatusCode(200);
-			//repo.deleteById(userId);
+			repo.deleteById(userId);
 			repo.softDelete(userId);
 			return response;
 		}
-		response.setMessage(AppConstants.failDeleteMessage);
+		response.setMessage(AppConstants.FAILDELETEMESSAGE);
 		response.setStatusCode(204);
 		logger.debug("Delete Methode Execution Completed");
 		return response;
 	}
+	
 	
 }

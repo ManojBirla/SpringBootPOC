@@ -6,13 +6,13 @@ package com.neo.constants;
  */
 public class AppConstants {
 
-	public static final String successInsertMessage="User Details Successfully Added";
-	public static final String failInsertMessage="User Details Not Added Successfully";
-	public static final String successUpdateMessage="User Details Successfully Updated";
-	public static final String failUpdateMessage="User Details Failed To Updated";
-	public static final String successDeleteMessage="User Details Successfully Deleted";
-	public static final String failDeleteMessage="User Details Not Deleted";
-	public static final String successMessage="User Details Successfully Updated";
-	public static final String failGetMessage="User Details Not Found";
+	public static final String SUCCESSINSERTMESSAGE="User Details Successfully Added";
+	public static final String FAILINSERTMESSAGE="User Details Not Added Successfully";
+	public static final String SUCCESSUPDATEMESSAGE="User Details Successfully Updated";
+	public static final String FAILUPDATEMESSAGE="User Details Failed To Updated";
+	public static final String SUCCESSDELETEMESSAGE="User Details Successfully Deleted";
+	public static final String FAILDELETEMESSAGE="User Details Not Deleted";
+	public static final String SUCCESSMESSAGE="User Details Successfully Updated";
+	public static final String FAILGETMESSAGE="User Details Not Found";
 	
 }

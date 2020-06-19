@@ -25,6 +25,7 @@ public interface UserRepository extends CrudRepository<UserEntity, Serializable>
 
 	@Query("update UserEntity e set e.isActive=false where e.userid =:id")
 	@Transactional
+	@Modifying
 	void softDelete(Integer id);
 
 }

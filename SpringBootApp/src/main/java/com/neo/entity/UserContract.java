@@ -11,6 +11,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -29,20 +32,25 @@ public class UserContract {
 	private Integer userContractId;
 
 	@Column(name = "companyName")
+	@NotNull
 	private String companyName;
 
 	@Column(name = "duration")
+	@NotNull
 	private String duration;
 
 	@Column(name = "exp")
+	@NotNull
 	private String exp;
 
 	@Column(name = "createDate", updatable = false)
 	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date CreateDate;
 
 	@Column(name = "updateDate")
 	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 
 	@OneToOne

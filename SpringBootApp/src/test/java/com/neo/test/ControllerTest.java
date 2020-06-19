@@ -55,14 +55,14 @@ public class ControllerTest {
 	entity.setMobileNo(787878);
 	
 	resMsg=new ResponseEntityMessage();
-	resMsg.setMessage(AppConstants.successInsertMessage);
+	resMsg.setMessage(AppConstants.SUCCESSINSERTMESSAGE);
 	resMsg.setStatusCode(200);
 	resMsg.setUserId(entity.getUserid());
 	
 	failEntity=new UserEntity();
 	failEntity.setUserid(null);
 	failResMsg=new ResponseEntityMessage();
-	failResMsg.setMessage(AppConstants.failInsertMessage);
+	failResMsg.setMessage(AppConstants.FAILINSERTMESSAGE);
 	failResMsg.setStatusCode(400);
 	failResMsg.setUserId(null);
 	
@@ -90,7 +90,7 @@ public class ControllerTest {
 	
 	@Test
 	public void modifyUserDetailsIfSuccess() throws Exception {
-		resMsg.setMessage(AppConstants.successUpdateMessage);
+		resMsg.setMessage(AppConstants.SUCCESSUPDATEMESSAGE);
 		Mockito.when(userRepo.save(entity)).thenReturn(entity);
 		assertEquals(resMsg,serviceImpl.modifyUserDetails(entity,entity.getUserid()));
 		
@@ -98,7 +98,7 @@ public class ControllerTest {
 	
 	@Test
 	public void modifyUserDetailsIfFailed() throws Exception {
-		failResMsg.setMessage(AppConstants.failUpdateMessage);
+		failResMsg.setMessage(AppConstants.FAILUPDATEMESSAGE);
 		failResMsg.setStatusCode(304);
 	//	Mockito.when(userRepo.save(failEntity)).thenReturn(failEntity);
 		assertEquals(failResMsg,serviceImpl.modifyUserDetails(failEntity,failEntity.getUserid()));
@@ -123,7 +123,7 @@ public class ControllerTest {
 	
 	@Test
 	public void deleteUserDetailsByIdIfSuccess() throws Exception {
-		resMsg.setMessage(AppConstants.successDeleteMessage);
+		resMsg.setMessage(AppConstants.SUCCESSDELETEMESSAGE);
 		resMsg.setUserId(null);
 		doNothing().when(userRepo).softDelete(entity.getUserid());
 		assertEquals(resMsg,serviceImpl.deleteUserDetailsById(entity.getUserid()));
@@ -132,7 +132,7 @@ public class ControllerTest {
 	
 	@Test
 	public void deleteUserDetailsByIdIfFailed() throws Exception {
-		failResMsg.setMessage(AppConstants.failDeleteMessage);
+		failResMsg.setMessage(AppConstants.FAILDELETEMESSAGE);
 		failResMsg.setStatusCode(204);
 		
 	//	doNothing().when(userRepo).softDelete(entity.getUserid());

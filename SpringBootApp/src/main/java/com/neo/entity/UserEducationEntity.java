@@ -7,10 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,30 +32,34 @@ public class UserEducationEntity {
 	private Integer userEduId;
 	
 	@Column(name="userScName")
+	@NotNull
 	private String userScName;
 	
 	@Column(name="userScCityName")
+	@NotNull
 	private String userScCityName;
 	
 	@Column(name="userClgName")
+	@NotNull
 	private String userClgName;
 	
 	@Column(name="userBranchName")
+	@NotNull
 	private String userBranchName;
 	
 	@Column(name="UserClgCityNam")
+	@NotNull
 	private String UserClgCityName;
 	
 	@Column(name="createDate",updatable = false)
 	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date CreateDate;
 	
 	@Column(name="updateDate")
 	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 	
-	@OneToOne
-	@JoinColumn(name="urMaster_id",nullable = false)
-	private UserMasterEntity userMasterEntity;
 	
 }

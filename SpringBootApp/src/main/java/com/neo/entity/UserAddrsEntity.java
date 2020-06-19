@@ -7,10 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -33,27 +36,32 @@ public class UserAddrsEntity {
 	private Integer userAddrsId;
 	
 	@Column(name="houseNo")
+	@NotNull
 	private String houseNo;
 	
 	@Column(name="streetName")
+	@NotNull
 	private String StreetName;
 	
 	@Column(name="cityName")
+	@NotNull
 	private String cityName;
 	
 	@Column(name="pinCode")
+    @Min(111111)
+    @Max(999999)
 	private Integer pinCode;
 	
 	@Column(name="createDate",updatable = false)
 	@CreationTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date CreateDate;
 	
 	@Column(name="updateDate")
 	@UpdateTimestamp
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDate;
 	
-	@OneToOne
-	@JoinColumn(name="urMaster_id",nullable = false)
-	private UserMasterEntity userMasterEntity;
+	
 	
 }
