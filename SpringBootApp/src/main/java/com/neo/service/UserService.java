@@ -2,6 +2,7 @@ package com.neo.service;
 
 import java.util.List;
 
+import com.neo.entity.DynamicSeachEntity;
 import com.neo.entity.ResponseEntityMessage;
 import com.neo.entity.UserEntity;
 import com.neo.entity.UserMasterEntity;
@@ -19,4 +20,5 @@ public interface UserService {
     public List<UserEntity> sortingUsers()throws Exception; 
     public ResponseEntityMessage deleteUserDetailsById(Integer userId) throws Exception;
     public ResponseEntityMessage saveUserMaster(UserMasterEntity entity);
+    public List<UserEntity> getUserByDySearch(DynamicSeachEntity dySEntity);
 }

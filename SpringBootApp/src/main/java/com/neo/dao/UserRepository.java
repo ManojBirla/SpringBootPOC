@@ -2,9 +2,7 @@ package com.neo.dao;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -16,6 +14,9 @@ import com.neo.entity.UserEntity;
  * @author MANOJ BIRLA DATE 16-JUNE-2020
  */
 public interface UserRepository extends CrudRepository<UserEntity, Serializable> {
+
+	@Query("select e from UserEntity e where e.firstName like :fname% OR e.lastName like :lname% OR e.email like :email%")
+	public List<UserEntity> findByFnameOrLastNameAndEmail(String fname, String lname,String email);
 
 	@Query("select e from UserEntity e where e.firstName like :fname% OR e.lastName like :lname%")
 	public List<UserEntity> findByFnameOrLastName(String fname, String lname);

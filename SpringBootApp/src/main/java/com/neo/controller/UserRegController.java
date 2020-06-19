@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neo.constants.AppConstants;
+import com.neo.entity.DynamicSeachEntity;
 import com.neo.entity.ResponseEntityMessage;
 import com.neo.entity.UserEntity;
 import com.neo.entity.UserMasterEntity;
@@ -148,6 +149,29 @@ public class UserRegController {
 		} catch (Exception e) {
 			logger.error("Error Message");
 			logger.debug("UpdateUserDetailsById Method Execution Completed");
+			System.out.println("exception");
+			return list;
+		}
+	}
+	/**
+	 * This methode is used to dynamic search users
+	 * 
+	 * @param entity
+	 * @param mrId
+	 * @return users list
+	 */
+	@PostMapping(value = "/DysearchByName", produces = { "application/json" })
+	public List<UserEntity> dySearchUser(@RequestBody DynamicSeachEntity dySentity) {
+		logger.debug("searchUser Method Execution Started");
+		UserEntity urentity = new UserEntity();
+		List<UserEntity> list = new ArrayList<>();
+		try {
+			list = service.getUserByDySearch(dySentity);
+			System.out.println(urentity .getFirstName() + " yyy " + urentity );
+			return list;
+		} catch (Exception e) {
+			logger.error("Error Message");
+			logger.debug("dySearchUser Method Execution Completed");
 			System.out.println("exception");
 			return list;
 		}

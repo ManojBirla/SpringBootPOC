@@ -15,6 +15,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.neo.constants.AppConstants;
+import com.neo.controller.UserRegController;
 import com.neo.dao.UserRepository;
 import com.neo.entity.ResponseEntityMessage;
 import com.neo.entity.UserEntity;
@@ -31,10 +32,10 @@ import com.neo.service.UserServiceImpl;
 public class ControllerTest { 
 	
 	@Mock
-	private static  UserRepository userRepo;
+	private static  UserService userService;
 
-	@InjectMocks
-	private static UserService serviceImpl=new UserServiceImpl(); 
+	@InjectMocks 
+	private static UserRegController regController=new UserRegController();
 	
 	UserEntity entity=null;
 	UserEntity failEntity=null;

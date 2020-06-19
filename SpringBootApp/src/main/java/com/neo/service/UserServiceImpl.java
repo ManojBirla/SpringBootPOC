@@ -14,6 +14,7 @@ import com.neo.constants.AppConstants;
 import com.neo.controller.UserRegController;
 import com.neo.dao.UserMasterRepository;
 import com.neo.dao.UserRepository;
+import com.neo.entity.DynamicSeachEntity;
 import com.neo.entity.ResponseEntityMessage;
 import com.neo.entity.UserEntity;
 import com.neo.entity.UserMasterEntity;
@@ -203,5 +204,22 @@ public class UserServiceImpl implements UserService {
 		return response;
 	}
 	
+	/**
+	 * This methode is used to dynamic Searching
+	 * 
+	 * @param 
+	 * @return list of Users
+	 */
+	public List<UserEntity> getUserByDySearch(DynamicSeachEntity dySEntity){
+		logger.debug("getUserByDySearch Methode Execution Started");
+		String fname=dySEntity.getFirstName();
+		String lname=dySEntity.getLastName();
+		String email=dySEntity.getEmail();
+		Integer pincode=dySEntity.getPincode();
+		List<UserEntity> usersList=repo.findByFnameOrLastNameAndEmail(fname, lname, email);
+		logger.debug("getUserByDySearch Methode Execution Started");
+		return usersList;
+		
+	}
 	
 }
