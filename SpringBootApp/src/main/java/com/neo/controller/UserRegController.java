@@ -3,12 +3,13 @@ package com.neo.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -66,6 +67,7 @@ public class UserRegController {
 		try {
 
 			response = service.saveUserMaster(entity);
+			//System.out.println(new ResponseEntity<ResponseEntityMessage>(response, HttpStatus.OK));
 			return new ResponseEntity<ResponseEntityMessage>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			response.setMessage(AppConstants.FAILINSERTMESSAGE);
@@ -84,7 +86,7 @@ public class UserRegController {
 	 * @return ResponseEntity<String> message
 	 */
 	@PostMapping(value = "/userdtlsregister", produces = { "application/json" })
-	public ResponseEntity<ResponseEntityMessage> registerUser(@RequestBody UserEntity entity) {
+	public ResponseEntity<ResponseEntityMessage> registerUserDtls(@RequestBody UserEntity entity) {
 		logger.debug("Save Methode Execution Started");
 		System.out.println("userdtlsregister");
 		ResponseEntityMessage response = new ResponseEntityMessage();
@@ -130,29 +132,6 @@ public class UserRegController {
 
 	}
 
-	/**
-	 * This methode is used to search users
-	 * 
-	 * @param entity
-	 * @param mrId
-	 * @return users list
-	 */
-	@GetMapping(value = "/searchByName", produces = { "application/json" })
-	public List<UserEntity> searchUser(@RequestParam("fname") String fname, @RequestParam("lname") String lname) {
-		logger.debug("searchUser Method Execution Started");
-		UserEntity entity = new UserEntity();
-		List<UserEntity> list = new ArrayList<>();
-		try {
-			list = service.findUserByFnameAndLname(fname, lname);
-			System.out.println(entity.getFirstName() + " yyy " + entity);
-			return list;
-		} catch (Exception e) {
-			logger.error("Error Message");
-			logger.debug("UpdateUserDetailsById Method Execution Completed");
-			System.out.println("exception");
-			return list;
-		}
-	}
 	/**
 	 * This methode is used to dynamic search users
 	 * 

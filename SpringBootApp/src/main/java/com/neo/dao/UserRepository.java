@@ -15,7 +15,7 @@ import com.neo.entity.UserEntity;
  */
 public interface UserRepository extends CrudRepository<UserEntity, Serializable> {
 
-	@Query("select e from UserEntity e where e.firstName like :fname% OR e.lastName like :lname% OR e.email like :email%")
+	@Query("select e from UserEntity e where e.firstName like :fname% OR e.lastName like :lname% OR e.email like :email%" )
 	public List<UserEntity> findByFnameOrLastNameAndEmail(String fname, String lname,String email);
 
 	@Query("select e from UserEntity e where e.firstName like :fname% OR e.lastName like :lname%")
@@ -24,9 +24,9 @@ public interface UserRepository extends CrudRepository<UserEntity, Serializable>
 	@Query("select e from UserEntity e order by dob,doj")
 	public List<UserEntity> sortUserByDobAndDoj();
 
-	@Query("update UserEntity e set e.isActive=false where e.userid =:id")
-	@Transactional
 	@Modifying
-	void softDelete(Integer id);
+	@Transactional
+	@Query("update UserEntity e set e.isActive=false where e.userid =:id")
+	public void softDelete(Integer id);
 
 }

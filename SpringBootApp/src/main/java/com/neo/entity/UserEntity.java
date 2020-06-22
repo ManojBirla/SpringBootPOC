@@ -75,6 +75,7 @@ public class UserEntity {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date CreateDate;
 	
+	
 	@Column(name="updateDate")
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
